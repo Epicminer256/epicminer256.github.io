@@ -28,7 +28,8 @@
         <script>
             let element = document.querySelector("main");
             let searchParams = new URLSearchParams("?"+window.location.href.split("?")[1])
-            let currentPost = searchParams.get("title")
+            let currentPost = searchParams.get("postid")
+            let found = false
             fetch("https://epicminer256.github.io/blog.json").then((response) => {
                 element.innerHTML = "";
                 return response.json()
@@ -49,7 +50,6 @@
                         `
                     }
                 }else{
-                    let found = false
                     for(let post of posts){
                         if(post.UUID == currentPost){
                             element.innerHTML+=`
@@ -71,7 +71,17 @@
                         }
                     }
                     if(found == false){
-                        element.innerHTML = '<a href="blog.html">Go back</a><h1>Post not found!</h1>'
+                        element.innerHTML = `
+                            <a href="blog.html">Go back</a>
+                            <h1>Post not found!</h1>
+                            <p>This post was not found on the blog servers</p>
+                            <h1>What the problem could be</h1>
+                            <ul>
+                                <li>The post URL is incorrect or malformed</li>
+                                <li>The post URL got updated to a new one (its a old link)</li>
+                                <li>The post could have been deleted</li>
+                            </ul>
+                        `
                     }
                 }
             }).catch((err) => {
