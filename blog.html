@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="termlegacy/main.css" >
+    </head>
+    <body>
+        <header>
+            <h1>Epicminer256</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html" class="current">Blog</a>
+            </nav>
+        </header>
+        <main>
+            loading...
+        </main>
+        <aside>
+            <h1>Socials</h1>
+            <a href="https://discord.gg/w8fdWKAkGh" class="discord-icon">Discord</a>
+            <a href="https://github.com/Epicminer256" class="github-icon">Github</a>
+            <a href="https://www.youtube.com/channel/UCkURfrhI4qES__Q6SZU51cg" class="youtube-icon">Youtube</a>
+        </aside>
+        <footer>
+            Website not subject to license. Projects listed on this site are subject to their own licenses
+        </footer>
+        <script>
+            let element = document.querySelector("main");
+            let searchParams = new URLSearchParams("?"+window.location.href.split("?")[1])
+            let currentPost = searchParams.get("title")
+            fetch("blog.json").then((response) => {
+                element.innerHTML = "";
+                return response.json()
+            }).then((posts) => {
+                if(currentPost == null){
+                    for(let post of posts){
+                        post.preview = "";
+                        post.content.forEach((e => {
+                            post.preview+= e.content + " "
+                        }))
+                        if(post.preview.length > 150) post.preview = post.preview.slice(0, 150) + "..."
+                        element.innerHTML+=`
+                        <section>
+                            <h1><a href="blog.html?title=${encodeURIComponent(post.title)}">${post.title}</a></h1>
+                            <hr>
+                            ${post.preview} <a href="blog.html?title=${encodeURIComponent(post.title)}">Read more...</a>
+                        </section>
+                        `
+                    }
+                }else{
+                    let found = false
+                    for(let post of posts){
+                        if(post.title == currentPost){
+                            element.innerHTML+=`
+                                <article>
+                                    <a href="blog.html">Go back</a>
+                                    <h1>${currentPost}</h1>
+                                    <hr>
+                            `
+                            post.content.forEach((e) => {
+                                element.innerHTML+=`
+                                        <section>
+                                            <h2>${e.heading}</h2>
+                                            ${e.content}
+                                        </section>
+                                `
+                            })
+                            element.innerHTML+="</article>"
+                            found = true
+                        }
+                    }
+                    if(found == false){
+                        element.innerHTML = '<a href="blog.html">Go back</a><h1>Post not found!</h1>'
+                    }
+                }
+            }).catch((err) => {
+                element.innerHTML = `
+                <h1>Error: ${err.message}</h1>
+                <p>${err.stack}</p>
+                `
+                if(err.message == "Failed to fetch"){
+                    element.innerHTML += `
+                        <h1>What the problem could be</h1>
+                        <ul>
+                            <li>You may have disconnected from the internet, which could of broke the site</li>
+                            <li>If you downloaded this website locally, this website can break</li>
+                        </ul>
+                    `
+                }
+            })
+        </script>
+    </body>
+</html>
