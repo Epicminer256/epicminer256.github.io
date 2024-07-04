@@ -42,20 +42,20 @@
                         if(post.preview.length > 150) post.preview = post.preview.slice(0, 150) + "..."
                         element.innerHTML+=`
                         <section>
-                            <h1><a href="blog.html?title=${encodeURIComponent(post.title)}">${post.title}</a></h1>
+                            <h1><a href="blog.html?postid=${encodeURIComponent(post.UUID)}">${post.title}</a></h1>
                             <hr>
-                            ${post.preview} <a href="blog.html?title=${encodeURIComponent(post.title)}">Read more...</a>
+                            ${post.preview} <a href="blog.html?postid=${encodeURIComponent(post.UUID)}">Read more...</a>
                         </section>
                         `
                     }
                 }else{
                     let found = false
                     for(let post of posts){
-                        if(post.title == currentPost){
+                        if(post.UUID == currentPost){
                             element.innerHTML+=`
                                 <article>
                                     <a href="blog.html">Go back</a>
-                                    <h1>${currentPost}</h1>
+                                    <h1>${post.title}</h1>
                                     <hr>
                             `
                             post.content.forEach((e) => {
