@@ -29,7 +29,7 @@
             let element = document.querySelector("main");
             let searchParams = new URLSearchParams("?"+window.location.href.split("?")[1])
             let currentPost = searchParams.get("title")
-            fetch("blog.json").then((response) => {
+            fetch("https://epicminer256.github.io/blog.json").then((response) => {
                 element.innerHTML = "";
                 return response.json()
             }).then((posts) => {
