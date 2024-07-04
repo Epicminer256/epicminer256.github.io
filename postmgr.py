@@ -1,5 +1,6 @@
 import uuid
 import json
+import time
 
 print("Loading file...")
 posts = json.load(open("blog.json", "r"))
@@ -46,6 +47,7 @@ while True:
         rawPost = {
             "UUID": str(uuid.uuid4()),
             "title": title,
+            "timeposted": int(time.time()),
             "content": sections
         }
         

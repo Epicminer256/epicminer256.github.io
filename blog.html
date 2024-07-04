@@ -42,11 +42,16 @@
                             post.preview+= e.content + " "
                         }))
                         if(post.preview.length > 150) post.preview = post.preview.slice(0, 150) + "..."
+
+                        let timestamp = new Date(post.timeposted)
+                        post.timeposted=timestamp.toLocaleString();
+                        
                         element.innerHTML+=`
                         <section>
                             <h1><a href="blog.html?postid=${encodeURIComponent(post.UUID)}">${post.title}</a></h1>
                             <hr>
                             ${post.preview} <a href="blog.html?postid=${encodeURIComponent(post.UUID)}">Read more...</a>
+                            <p>Posted ${post.timeposted}</p>
                         </section>
                         `
                     }
