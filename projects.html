@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="termlegacy/main.css" >
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
         <header>
@@ -33,15 +34,19 @@
                 return response.json()
             }).then((projects) => {
                 for(let project of projects){
+                    project.extrainfo = " (Source)"
                     if(project.description === null) project.description = "No Description"
                     if(project.homepage) project.html_url = project.homepage
-                    element.innerHTML+=`
-                    <section>
-                        <h1><a href="${project.html_url}">${project.name}</a></h1>
-                        <hr>
-                        ${project.description}
-                    </section>
-                    `
+                    if(project.homepage) project.extrainfo=""
+                    if(project.archived == false){
+                        element.innerHTML+=`
+                            <section>
+                                <h1><a href="${project.html_url}">${project.name} ${project.extrainfo}</a></h1>
+                                <hr>
+                                ${project.description}
+                            </section>
+                        `
+                    }
                 }
             }).catch((err) => {
                 element.innerHTML = `
