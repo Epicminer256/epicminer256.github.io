@@ -42,7 +42,7 @@ while True:
             print("Enter the section's contents (leave empty to cancel making this section)")
             content=input(">")
             if title=="": continue
-            sections.append({"header": header, "content": content})
+            sections.append({"heading": header, "content": content})
         
         rawPost = {
             "UUID": str(uuid.uuid4()),
