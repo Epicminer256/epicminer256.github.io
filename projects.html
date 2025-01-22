@@ -33,7 +33,7 @@
                 return response.json()
             }).then((projects) => {
                 for(let project of projects){
-                    project.extrainfo = " (Source)"
+                    project.extrainfo = " (Source Code Only)"
                     if(project.description === null) project.description = "No Description"
                     if(project.homepage) project.html_url = project.homepage
                     if(project.homepage) project.extrainfo=""
