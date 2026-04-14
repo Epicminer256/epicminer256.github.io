@@ -11,7 +11,6 @@ Then put the elements below into your body. Some of them you can remove if you w
     <nav>
         <a href="#" class="current">Home</a>
         <a href="projects">Projects</a>
-        <a href="blog">Blog</a>
     </nav>
 </header>
 <main>
